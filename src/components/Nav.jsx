@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { CgClose, CgMenu } from "react-icons/cg";
 import { FiShoppingCart } from "react-icons/fi";
 import { NavLink } from "react-router-dom";

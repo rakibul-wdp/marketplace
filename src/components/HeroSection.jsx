@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "../styles/Button";
@@ -14,10 +13,10 @@ const HeroSection = ({ myData }) => {
             <p className="intro-data">Welcome to </p>
             <h1> {name} </h1>
             <p>
-              Welcome to our e-commerce website, where
-              you'll find a wide variety of products at unbeatable prices! We
-              specialize in clothing, electronics, home goods, and more, with
-              new items added daily.
+              Welcome to our e-commerce website, where you'll find a wide
+              variety of products at unbeatable prices! We specialize in
+              clothing, electronics, home goods, and more, with new items added
+              daily.
             </p>
             <NavLink to="/products">
               <Button>shop now</Button>

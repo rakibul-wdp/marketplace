@@ -1,4 +1,3 @@
-import React from "react";
 import { FaDiscord, FaInstagram, FaYoutube } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
