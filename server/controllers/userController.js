@@ -33,3 +33,42 @@ export const signUp = async (req, res, next) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+export const login = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  let existingUser;
+
+  try {
+    existingUser = await User.findOne({ email: email });
+  } catch (error) {
+    return new Error(error);
+  }
+
+  if (!existingUser) {
+    return res.status(400).json({ message: "User not exist .Please signIn " });
+  }
+
+  const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);
+  if (!isPasswordCorrect) {
+    return res.status(400).json({ message: "Invalid email /Password" });
+  }
+
+  const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET_KEY, {
+    expiresIn: "60s",
+  });
+
+  if (req.cookies[`${existingUser._id}`]) {
+    req.cookies[`${existingUser._id}`] = "";
+  }
+
+  res.cookie(String(existingUser._id), token, {
+    path: "/",
+    expires: new Date(Date.now() + 1000 * 60),
+    httpOnly: true,
+    sameSite: "lax",
+  });
+  return res
+    .status(200)
+    .json({ message: "Successfully login", user: existingUser, token });
+};
