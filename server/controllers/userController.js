@@ -92,3 +92,17 @@ export const verifyToken = (req, res, next) => {
 
   next();
 };
+
+export const getUser = async (req, res, next) => {
+  const userId = req.id;
+  let user;
+  try {
+    user = await User.findById(userId, "-password");
+  } catch (err) {
+    return new Error(err);
+  }
+  if (!user) {
+    return res.status(404).json({ message: "User not find" });
+  }
+  return res.status(200).json({ user });
+};
