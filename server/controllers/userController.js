@@ -113,33 +113,29 @@ export const refreshToken = (req, res, next) => {
   if (!prevToken) {
     return res.status(400).json({ message: "Couldn't find token" });
   }
-  jwt.verify(
-    String(prevToken),
-    process.env.process.env.JWT_SECRET_KEY,
-    (err, user) => {
-      if (err) {
-        console.log(err);
-        return res.status(403).json({ message: "Authentication failed" });
-      }
-      res.clearCookie(`${user.id}`);
-      req.cookies[`${user.id}`] = "";
-
-      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
-        expiresIn: "60s",
-      });
-      console.log("Regenerated Token\n", token);
-
-      res.cookie(String(user.id), token, {
-        path: "/",
-        expires: new Date(Date.now() + 1000 * 60),
-        httpOnly: true,
-        sameSite: "lax",
-      });
-
-      req.id = user.id;
-      next();
+  jwt.verify(String(prevToken), process.env.JWT_SECRET_KEY, (err, user) => {
+    if (err) {
+      console.log(err);
+      return res.status(403).json({ message: "Authentication failed" });
     }
-  );
+    res.clearCookie(`${user.id}`);
+    req.cookies[`${user.id}`] = "";
+
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
+      expiresIn: "60s",
+    });
+    console.log("Regenerated Token\n", token);
+
+    res.cookie(String(user.id), token, {
+      path: "/",
+      expires: new Date(Date.now() + 1000 * 60),
+      httpOnly: true,
+      sameSite: "lax",
+    });
+
+    req.id = user.id;
+    next();
+  });
 };
 
 export const logout = (req, res, next) => {
@@ -148,17 +144,13 @@ export const logout = (req, res, next) => {
   if (!prevToken) {
     return res.status(400).json({ message: "Couldn't find token" });
   }
-  jwt.verify(
-    String(prevToken),
-    process.env.process.env.JWT_SECRET_KEY,
-    (err, user) => {
-      if (err) {
-        console.log(err);
-        return res.status(403).json({ message: "Authentication failed" });
-      }
-      res.clearCookie(`${user.id}`);
-      req.cookies[`${user.id}`] = "";
-      return res.status(200).json({ message: "Successfully Logged Out" });
+  jwt.verify(String(prevToken), process.env.JWT_SECRET_KEY, (err, user) => {
+    if (err) {
+      console.log(err);
+      return res.status(403).json({ message: "Authentication failed" });
     }
-  );
+    res.clearCookie(`${user.id}`);
+    req.cookies[`${user.id}`] = "";
+    return res.status(200).json({ message: "Successfully Logged Out" });
+  });
 };
