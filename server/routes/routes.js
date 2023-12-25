@@ -1,5 +1,5 @@
 import express from "express";
-import { auctionItem } from "../controllers/auctionController";
+import { allAuctionItem, auctionItem } from "../controllers/auctionController";
 import { addItemList, allProduct } from "../controllers/itemController";
 import {
   getUser,
@@ -22,6 +22,6 @@ router.post("/additem", addItemList);
 router.get("/allitemlist", allProduct);
 
 router.post("/auctionitem", auctionItem);
-router.get("/allauctionitem", allAuctionItemem);
+router.get("/allauctionitem", allAuctionItem);
 
 export default router;
