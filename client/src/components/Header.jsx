@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Headers = () => {
+const Header = () => {
   const [value, setValue] = useState();
 
   return (
@@ -9,13 +9,13 @@ const Headers = () => {
       <h4>MarketPlace</h4>
       <div>
         <div onChange={(e, val) => setValue(val)} value={value}>
-          <Link label="SignUp" to="/" />
-          <Link label="Login" to="/login" />
-          <Link label="Home" to="/home" />
+          <Link to="/">SignUp</Link>
+          <Link to="/login">Login</Link>
+          <Link to="/home">Home</Link>
         </div>
       </div>
     </div>
   );
 };
 
-export default Headers;
+export default Header;
